@@ -94,7 +94,7 @@ SIMPLE_JWT = {
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# # LOCAL
+# LOCAL
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
