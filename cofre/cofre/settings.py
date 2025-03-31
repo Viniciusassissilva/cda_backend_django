@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-j6(s9gu&+txcc*zs9p^m-azqemt+x81xhvrdrgt&-7+-kqhjwi
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -40,9 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'alunos',
+    'rest_framework_simplejwt',
+    "waffle",
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -72,20 +76,47 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'cofre.wsgi.application'
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=120),  # ou 60, se quiser
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# # LOCAL
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'cofre_aluno_db',       # nome do banco que você criou
+#         'USER': 'postgres',             # ou outro nome, se criou novo usuário
+#         'PASSWORD': 'admin',   # a senha que definiu na instalaçao
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
+
+# senha_user = redes@2025
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'cofre_aluno_db',       # nome do banco que você criou
-        'USER': 'postgres',             # ou outro nome, se criou novo usuário
-        'PASSWORD': 'admin',   # a senha que definiu na instalação
-        'HOST': 'localhost',
+        'NAME': 'cda_data',
+        'USER': 'vinicius',
+        'PASSWORD': 'id5XSrtPOUxdw64GPNQv7JYndvNVAzIr',
+        'HOST': 'dpg-cvl4jubuibrs73a990kg-a.oregon-postgres.render.com',
         'PORT': '5432',
     }
 }
+
 
 
 
@@ -121,7 +152,12 @@ USE_I18N = True
 
 USE_TZ = True
 
+LOCAL_IP = "127.0.0.1"
+AWS_IP = "3.85.240.69"
 
+UDP_IP = AWS_IP
+UDP_PORT = 2005
+BUFFER = 1024
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
@@ -135,7 +171,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 INSTALLED_APPS += ['corsheaders']
 MIDDLEWARE = ['corsheaders.middleware.CorsMiddleware'] + MIDDLEWARE
 
-CORS_ALLOW_ALL_ORIGINS = True  # Em produção: cuidado!
+CORS_ALLOW_ALL_ORIGINS = True  # Em produçao: cuidado!
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

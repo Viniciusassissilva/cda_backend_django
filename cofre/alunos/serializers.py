@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate
 class AlunoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Aluno
-        fields = ['id', 'username', 'email', 'matricula']
+        fields = ['id', 'username', 'email', 'matricula', 'is_superuser']
 
 class ArquivoSerializer(serializers.ModelSerializer):
     dono = AlunoSerializer(read_only=True)

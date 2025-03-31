@@ -7,8 +7,9 @@ def enviar_arquivo_udp(path, nome_arquivo, servidor_udp, porta_udp):
     sock.settimeout(5)
 
     try:
-        # Enviar comando inicial
-        sock.sendto(f"UPLOAD:{nome_arquivo}".encode(), (servidor_udp, porta_udp))
+        # Enviar comando inicial corretamente como "UPLOAD:<nome>"
+        mensagem = f"UPLOAD:{nome_arquivo}"
+        sock.sendto(mensagem.encode(), (servidor_udp, porta_udp))
 
         SEQ = 0
         with open(path, 'rb') as f:
